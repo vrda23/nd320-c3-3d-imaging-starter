@@ -22,9 +22,10 @@ def LoadHippocampusData(root_dir, y_shape, z_shape):
         Array of dictionaries with data stored in seg and image fields as 
         Numpy arrays of shape [AXIAL_WIDTH, Y_SHAPE, Z_SHAPE]
     '''
-
-    image_dir = os.path.join(root_dir, 'images')
-    label_dir = os.path.join(root_dir, 'labels')
+    #path = "/home"
+    image_dir = r"C:\Users\jvrdo\Desktop\Udacity project 2\nd320-c3-3d-imaging-starter\section1\out\images"
+    #os.path.join(root_dir, 'images')
+    label_dir = r"C:\Users\jvrdo\Desktop\Udacity project 2\nd320-c3-3d-imaging-starter\section1\out\labels"
 
     images = [f for f in listdir(image_dir) if (
         isfile(join(image_dir, f)) and f[0] != ".")]
@@ -39,7 +40,6 @@ def LoadHippocampusData(root_dir, y_shape, z_shape):
         label, _ = load(os.path.join(label_dir, f))
 
         # TASK: normalize all images (but not labels) so that values are in [0..1] range
-        # <YOUR CODE GOES HERE>
         image = image.astype(np.single)/np.max(image)
         
         print(f'after img {np.amin(image), np.max(image), f}')

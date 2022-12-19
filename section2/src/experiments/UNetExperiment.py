@@ -153,7 +153,6 @@ class UNetExperiment:
             for i, batch in enumerate(self.val_loader):
                 
                 # TASK: Write validation code that will compute loss on a validation sample
-                # <YOUR CODE HERE>
                 data = batch['image'].to(self.device, dtype=torch.float)
                 target = batch['seg'].to(self.device, dtype=torch.long)
                 

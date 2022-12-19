@@ -3,7 +3,7 @@ This file contains code that will kick off training and testing processes
 """
 import os
 import json
-
+import numpy as np
 from experiments.UNetExperiment import UNetExperiment
 from data_prep.HippocampusDatasetLoader import LoadHippocampusData
 
@@ -13,12 +13,12 @@ class Config:
     """
     def __init__(self):
         self.name = "Basic_unet"
-        self.root_dir = r"YOUR DIRECTORY HERE"
+        self.root_dir = r"../"
         self.n_epochs = 10
         self.learning_rate = 0.0002
         self.batch_size = 8
         self.patch_size = 64
-        self.test_results_dir = "RESULTS GO HERE"
+        self.test_results_dir = "../out"
 
 if __name__ == "__main__":
     # Get configuration
@@ -42,14 +42,29 @@ if __name__ == "__main__":
 
     # Here, random permutation of keys array would be useful in case if we do something like 
     # a k-fold training and combining the results. 
-
+    keys = np.random.permutation(np.array(keys))
     split = dict()
 
     # TASK: create three keys in the dictionary: "train", "val" and "test". In each key, store
     # the array with indices of training volumes to be used for training, validation 
     # and testing respectively.
     # <YOUR CODE GOES HERE>
-
+    countk = 0
+    for ind in range(len(keys)):
+        if countk < (0.6*len(keys)):
+            split.setdefault('train',[])
+            split['train'].append(keys[ind])
+            countk += 1
+            continue
+        elif countk < (0.8*len(keys)):
+            split.setdefault('val',[])
+            split['val'].append(keys[ind])
+            countk += 1
+            continue
+        else:
+            split.setdefault('test',[])
+            split['test'].append(keys[ind])
+            countk += 1
     # Set up and run experiment
     
     # TASK: Class UNetExperiment has missing pieces. Go to the file and fill them in

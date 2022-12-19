@@ -97,8 +97,8 @@ class UNetExperiment:
             # shape [BATCH_SIZE, 1, PATCH_SIZE, PATCH_SIZE] into variables data and target. 
             # Feed data to the model and feed target to the loss function
             # 
-            # data = <YOUR CODE HERE>
-            # target = <YOUR CODE HERE>
+            data = batch['image'].to(self.device, dtype=torch.float)
+            target = batch['seg'].to(self.device, dtype=torch.long)
 
             prediction = self.model(data)
 
@@ -109,7 +109,7 @@ class UNetExperiment:
             loss = self.loss_function(prediction, target[:, 0, :, :])
 
             # TASK: What does each dimension of variable prediction represent?
-            # ANSWER:
+            # ANSWER: Batch index is the first dimension, each pixel's class probability represents the second dimension, Y is the third dimension and Z is the fourth.
 
             loss.backward()
             self.optimizer.step()
@@ -154,6 +154,14 @@ class UNetExperiment:
                 
                 # TASK: Write validation code that will compute loss on a validation sample
                 # <YOUR CODE HERE>
+                data = batch['image'].to(self.device, dtype=torch.float)
+                target = batch['seg'].to(self.device, dtype=torch.long)
+                
+                prediction = self.model(data)
+                prediction_softmax = F.softmax(prediction, dim=1)
+                
+                loss = self.loss_function(prediction, target[:, 0, :, :])
+                print(f"Batch {i}. Data shape {data.shape} Loss {loss}")
 
                 print(f"Batch {i}. Data shape {data.shape} Loss {loss}")
 

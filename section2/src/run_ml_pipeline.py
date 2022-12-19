@@ -48,7 +48,7 @@ if __name__ == "__main__":
     # TASK: create three keys in the dictionary: "train", "val" and "test". In each key, store
     # the array with indices of training volumes to be used for training, validation 
     # and testing respectively.
-    # <YOUR CODE GOES HERE>
+    
     countk = 0
     for ind in range(len(keys)):
         if countk < (0.6*len(keys)):
